@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery Cart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #fffbeb;
+            color: #78350f;
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .cart-title {
+            text-align: center;
+            color: #92400e;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #fde68a;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .item-details h3 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details p {
+            color: #b45309;
+            font-size: 0.9rem;
+        }
+
+        .restaurant-name {
+            color: #78350f;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .quantity-btn {
+            background: #fef3c7;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            color: #92400e;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background: #fde68a;
+        }
+
+        .quantity {
+            font-weight: bold;
+            color: #92400e;
+        }
+
+        .price-details {
+            text-align: right;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #92400e;
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            text-decoration: underline;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 4px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-title {
+            color: #92400e;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #fde68a;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: #b45309;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #fde68a;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #92400e;
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: #92400e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .checkout-btn:hover {
+            background: #b45309;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 2rem;
+            color: #92400e;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #92400e;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 2px solid #92400e;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .continue-shopping:hover {
+            background: #92400e;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+            }
+
+            .price-details {
+                grid-column: 1 / -1;
+                text-align: left;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid #fde68a;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="cart-title">Your Cart</h1>
+        
+        <div class="cart-container">
+            <div class="cart-items">
+                <div class="cart-item">
+                   
+                    <div class="item-details">
+                        <p class="restaurant-name">Big Meals</p>
+                        <h3>Jollof Spaghetti</h3>
+                        <p>Classic Tomatoe spaghetti with boiled egg</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(1, -1)">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn" onclick="updateQuantity(1, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="price-details">
+                        <p class="item-price">$12.99</p>
+                        <button class="remove-btn">Remove</button>
+                    </div>
+                </div>
+
+                <div class="cart-item">
+                   
+                    <div class="item-details">
+                        <p class="restaurant-name">Sweet and Savory</p>
+                        <h3>Stir fry spaghetti</h3>
+                        <p>Fried veggie spaghetti with sausage</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(2, -1)">-</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-btn" onclick="updateQuantity(2, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="price-details">
+                        <p class="item-price">$8.99</p>
+                        <button class="remove-btn">Remove</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <h2 class="summary-title">Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>$21.98</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span>$2.99</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax</span>
+                    <span>$1.99</span>
+                </div>
+                <div class="total-row">
+                    <span>Total</span>
+                    <span>$26.96</span>
+                </div>
+                <button class="checkout-btn" onclick="window.location.href='checkout.html'">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+
+        <!-- Empty cart state -->
+        <div class="empty-cart" style="display: none;">
+            <h2>Your cart is empty</h2>
+            <p>Add some delicious items from our restaurants!</p>
+            <a href="index.html" class="continue-shopping">Continue Shopping</a>
+        </div>
+    </div>
+
+    <script>
+        function updateQuantity(itemId, change) {
+            const quantityElement = event.target.parentElement.querySelector('.quantity');
+            let quantity = parseInt(quantityElement.textContent) + change;
+            if (quantity > 0) {
+                quantityElement.textContent = quantity;
+                updateTotals();
+            }
+        }
+
+        function updateTotals() {
+            // Add logic to update totals based on quantities
+            // This is a simplified version
+            const quantities = [...document.querySelectorAll('.quantity')].map(el => parseInt(el.textContent));
+            const prices = [12.99, 8.99];
+            const subtotal = quantities.reduce((acc, qty, idx) => acc + (qty * prices[idx]), 0);
+            const tax = subtotal * 0.09;
+            const delivery = 2.99;
+            const total = subtotal + tax + delivery;
+
+            // Update summary
+            document.querySelector('.summary-row:first-child span:last-child').textContent = `$${subtotal.toFixed(2)}`;
+            document.querySelector('.summary-row:nth-child(3) span:last-child').textContent = `$${tax.toFixed(2)}`;
+            document.querySelector('.total-row span:last-child').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Add event listeners for remove buttons
+        document.querySelectorAll('.remove-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const item = this.closest('.cart-item');
+                item.remove();
+                updateTotals();
+                
+                // Show empty cart message if no items left
+                if (document.querySelectorAll('.cart-item').length === 0) {
+                    document.querySelector('.cart-container').style.display = 'none';
+                    document.querySelector('.empty-cart').style.display = 'block';
+                }
+            });
+        });
+    </script>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #f0f0f0;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: background-color 0.3s ease;
+    }
+    .back-button:hover {
+        background-color: #e0e0e0;
+    }
+    .back-button svg {
+        width: 24px;
+        height: 24px;
+        fill: #333;
+    }
+</style>
+
+<body>
+    <button class="back-button" onclick="window.location.href='Bigmeals.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+    </button>
+    <button class="back-button" onclick="window.location.href='Bigmeals.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+    </button>
+</body>
+</body>
+</html>

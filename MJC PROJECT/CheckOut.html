@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Transfer Payment - Food Delivery</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #fffbeb;
+            color: #754e31;
+            line-height: 1.6;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header styles */
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #92400e;
+            font-size: 1.8rem;
+        }
+
+        /* Card styles */
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #fde68a;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            color: #92400e;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #fef3c7;
+        }
+
+        /* Bank details styles */
+        .bank-details {
+            background-color: #fef3c7;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-group {
+            margin-bottom: 1rem;
+        }
+
+        .detail-label {
+            display: block;
+            font-size: 0.875rem;
+            color: #754e31;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        /* New and modified styles for account number copying */
+        .account-number-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .account-number {
+            font-family: monospace;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            background-color: white;
+            border-radius: 4px;
+            border: 1px solid #fde68a;
+            flex-grow: 1;
+        }
+
+        .copy-button {
+            background-color: white;
+            border: 1px solid #fde68a;
+            border-radius: 4px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            padding: 8px;
+        }
+
+        .copy-button:hover {
+            background-color: #fef3c7;
+        }
+
+        .copy-button svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .copy-button .copy-icon {
+            display: block;
+        }
+
+        .copy-button .check-icon {
+            display: none;
+        }
+
+        .copy-button.copied .copy-icon {
+            display: none;
+        }
+
+        .copy-button.copied .check-icon {
+            display: block;
+        }
+
+        .copy-button.copied {
+            background-color: #ecfdf5;
+            border-color: #6ee7b7;
+        }
+
+        .copy-button .copy-icon path {
+            fill: #b45309;
+        }
+
+        .copy-button .check-icon path {
+            fill: #059669;
+        }
+
+        /* Rest of the previous styles */
+        .instructions {
+            margin-top: 1.5rem;
+        }
+
+        .instructions-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions-list {
+            list-style-position: inside;
+            color: #754e31;
+            padding-left: 1rem;
+        }
+
+        .instructions-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Order summary styles */
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            color: #754e31;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #fde68a;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #754e31;
+        }
+
+        /* Footer styles */
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #754e31;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .account-number {
+                font-size: 1rem;
+                word-break: break-all;
+            }
+        }
+
+        /* New styles for checkout button */
+        .checkout-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(to right, #92400e, #b45309);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(180, 83, 9, 0.2);
+        }
+
+        .checkout-button:active {
+            transform: translateY(0);
+        }
+
+        .checkout-button.loading {
+            background: linear-gradient(to right, #92400e, #754e31);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .checkout-button.loading .button-text {
+            visibility: hidden;
+        }
+
+        .checkout-button .spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        .checkout-button.loading .spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Add ripple effect styles */
+        .checkout-button .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Update card footer styles */
+        .card-footer {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #fde68a;
+        }
+
+        /* Add styles for the confirmation message */
+        .confirmation-message {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #ecfdf5;
+            border: 1px solid #6ee7b7;
+            border-radius: 6px;
+            color: #059669;
+        }
+
+        .confirmation-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Complete Your Payment</h1>
+
+        <!-- Bank Details Card -->
+        <div class="card">
+            <h2 class="card-title">Bank Transfer Details</h2>
+            <div class="bank-details">
+                <p style="color: #754e31; margin-bottom: 1rem;">Please transfer the exact amount to:</p>
+                
+                <div class="detail-group">
+                    <span class="detail-label">Bank Name</span>
+                    <div class="detail-value">Opay</div>
+                </div>
+
+                <div class="detail-group">
+                    <span class="detail-label">Account Name</span>
+                    <div class="detail-value">MJC FOOD DELIVERY</div>
+                </div>
+
+                <div class="detail-group">
+                    <span class="detail-label">Account Number</span>
+                    <div class="account-number-container">
+                        <div class="account-number">7079407863</div>
+                        <button class="copy-button" onclick="copyAccountNumber()" title="Copy account number">
+                            <!-- Copy Icon -->
+                            <svg class="copy-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 9h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2zm0 11h-9v-9h9v9zm-11-11V7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v2h-2V7h-9v2H9zm-2 2h2v9a2 2 0 0 0 2 2h9v2h-9a4 4 0 0 1-4-4v-9z"/>
+                            </svg>
+                            <!-- Check Icon -->
+                            <svg class="check-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <p class="instructions-title">Important Instructions:</p>
+                <ul class="instructions-list">
+                    <li>Transfer the exact amount shown below</li>
+                    <li>Use your order number as payment reference</li>
+                    <li>Payment confirmation may take 5-10 minutes</li>
+                    <li>Send payment proof to support@tastyfoods.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Order Summary Card -->
+        <div class="card">
+            <h2 class="card-title">Order Summary</h2>
+            <div class="summary-row">
+                <span>Order #1: Spicy fried rice with boiled egg</span>
+                <span>$24.99</span>
+               
+                
+                
+            </div>
+            <div class="summary-row">
+                <span>Delivery Fee</span>
+                <span>$4.99</span>
+            </div>
+            <div class="total-row">
+                <span>Total Amount</span>
+                <span>$28.98</span>
+            </div>
+            <div class="card-footer">
+                <button class="checkout-button" onclick="handleCheckout()">
+                    <span class="button-text">Confirm Payment</span>
+                    
+                    <div class="spinner"></div>
+                </button>
+            </div>
+            <div class="confirmation-message" id="confirmationMessage">
+                Payment confirmation sent! Please check your email for further instructions.
+            </div>
+        </div>
+
+        <div class="footer">
+            Need help? Contact our support at 07079407863 or 09055437293
+        </div>
+    </div>
+
+    <script>
+        // Previous copyAccountNumber function remains the same
+
+        function handleCheckout() {
+            const button = document.querySelector('.checkout-button');
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            
+            // Don't do anything if already loading
+            if (button.classList.contains('loading')) return;
+            
+            // Add ripple effect
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = event.clientX - rect.left - size/2 + 'px';
+            ripple.style.top = event.clientY - rect.top - size/2 + 'px';
+            button.appendChild(ripple);
+            
+            // Add loading state
+            button.classList.add('loading');
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                button.classList.remove('loading');
+                confirmationMessage.classList.add('show');
+                
+                // Remove ripple effect
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }, 2000);
+        }
+
+        function copyAccountNumber() {
+            // Get the account number text
+            const accountNumber = document.querySelector('.account-number').textContent;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(accountNumber).then(() => {
+                // Add the copied class to show check mark
+                const button = document.querySelector('.copy-button');
+                button.classList.add('copied');
+                
+                // Remove the copied class after 2 seconds
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            fill: #333;
+        }
+    </style>
+    
+    <body>
+        <button class="back-button" onclick="window.location.href='Home.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+        </button>
+        <button class="back-button" onclick="window.location.href='Home.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+        </button>
+</body>
+</html>

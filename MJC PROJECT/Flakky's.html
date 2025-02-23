@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJ's Food Delivery Services - University Eats</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .background {
+            background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1747&q=80');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content {
+            background-color: rgba(255, 248, 240, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.3);
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+        }
+        h1 {
+            color: #8B4513;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #D2691E;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        p {
+            color: #5D3A1A;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #D2691E;
+            color: white;
+            padding: 8px 50px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #8B4513;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+        .feature {
+            flex: 1;
+            margin: 0 10px;
+        }
+        .feature img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(350deg);
+        }
+        .feature h3 {
+            color: #8B4513;
+            margin-bottom: 10px;
+        }
+        .feature p {
+            font-size: 14px;
+            color: #5D3A1A;
+        }
+        .food {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .food {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(139, 69, 19, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .food:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
+        }
+        .food h3 {
+            color: #8B4513;
+            margin-top: 0;
+        }
+        .food p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="content">
+            <h1>MJ's Food Delivery Services</h1>
+            <h2>Satisfying Campus Cravings</h2>
+            <p>Hungry on campus? MJ's has got you covered! We deliver your favorite eats right to your dorm or study spot. Fast, reliable, and perfect for busy university life.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7541/7541900.png" alt="Fast Delivery">
+                    <h3>Speedy Delivery</h3>
+                    <p>Hot meals at your door in 10 minutes or less!</p>
+                </div>
+                
+            </div>
+            <h2>Flakky's</h2>
+            <div class="food">
+                <div class="food">
+                    <h3>Ofada rice and sauce</h3>
+                    <p>Spicy ofada rice with ofada sauce</p>
+                    <a href="#" class="cta-button">Order Now</a>
+                </div>
+                <div class="food">
+                    <h3>Plantain and egg</h3>
+                    <p>Sweet fried plantaing and fried egg</p>
+                    <a href="#" class="cta-button">Order Now</a>
+                </div>
+                <div class="food">
+                    <h3>Fries</h3>
+                    <p>Fried potato, Fried egg with ketchup</p>
+                    <a href="#" class="cta-button">Order Now</a>
+                </div>
+                <div class="food">
+                    <h3>White rice</h3>
+                    <p>White rice and stew</p>
+                    <a href="#" class="cta-button">Order Now</a>
+                </div>
+                <div class="food">
+                    <h3>Shawarma</h3>
+                    <p>Veggie wrap with sausage</p>
+                    <a href="#" class="cta-button">Order Now</a>
+                </div>
+                <div class="food">
+                    <h3>Chapman</h3>
+                    <p>Cool chapman drink</p>
+                    <a href="#" class="cta-button">Order Now</a>
+                </div>
+
+              
+            </div>
+           
+        </div>
+    
+    </div>
+
+</body>
+</html>

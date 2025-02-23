@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJ's Food Delivery Service - Login Page</title>
+    <style>
+        :root {
+            --primary-color: #8B4513; /* Dark brown */
+            --secondary-color: #D2B48C; /* Light brown */
+            --text-color: #4A3728; /* Dark brown text */
+            --background-color: rgba(245, 222, 179, 0.9); /* Wheat color for background with opacity */
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            background-image: url('https://images.unsplash.com/photo-1587151711096-23c51f92c920?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            background-color: var(--background-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid var(--secondary-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: rgba(255, 248, 220, 0.8); /* Light wheat color for input backgrounds with opacity */
+        }
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        button {
+            margin-top: 1.5rem;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #A0522D; /* Slightly lighter brown on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registeration Page</h1>
+        <form id="authForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="course">Course:</label>
+            <input type="text" id="course" name="course" required>
+
+            <label for="matricNumber">Matric Number:</label>
+            <input type="text" id="matricNumber" name="matricNumber" required>
+
+            <label for="mealPlan">Meal Plan:</label>
+            <select id="mealPlan" name="mealPlan" required>
+                <option value="">Select a meal plan</option>
+                <option value="breakfast-lunch">Breakfast and Lunch</option>
+                <option value="breakfast-dinner">Breakfast and Dinner</option>
+                <option value="lunch-dinner">Lunch and Dinner</option>
+            </select>
+
+            <label>Sex:</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="sex" value="female" required onchange="updateHallOptions()"> Female
+                </label>
+                <label>
+                    <input type="radio" name="sex" value="male" required onchange="updateHallOptions()"> Male
+                </label>
+            </div>
+
+            <label for="hallOfResidence">Hall of Residence:</label>
+            <select id="hallOfResidence" name="hallOfResidence" required>
+                <option value="">Select sex first</option>
+            </select>
+
+            <button type="submit">Register</button>
+            <button onclick="window.location.href='Home.html'"><a href="#" class="cta-button">Register</a></button>
+        </form>
+    </div>
+
+    <script>
+        function updateHallOptions() {
+            const sexRadios = document.getElementsByName('sex');
+            const hallSelect = document.getElementById('hallOfResidence');
+            let selectedSex;
+
+            for (const radio of sexRadios) {
+                if (radio.checked) {
+                    selectedSex = radio.value;
+                    break;
+                }
+            }
+
+            hallSelect.innerHTML = ''; // Clear existing options
+
+            if (selectedSex === 'female') {
+                const femaleHalls = ['Ameyo', 'Havilah', 'FAD', 'Queen Esther', 'Crystal', 'Diamond', 'Platinum', 'Sapphire'];
+                femaleHalls.forEach(hall => {
+                    const option = document.createElement('option');
+                    option.value = hall.toLowerCase().replace(' ', '-');
+                    option.textContent = hall;
+                    hallSelect.appendChild(option);
+                });
+            } else if (selectedSex === 'male') {
+                const maleHalls = ['Bethel', 'Nelson Mandela', 'Samuel Akande', 'Neal Wilson', 'Topaz', 'Emerald', 'Gideon Troopers'];
+                maleHalls.forEach(hall => {
+                    const option = document.createElement('option');
+                    option.value = hall.toLowerCase().replace(' ', '-');
+                    option.textContent = hall;
+                    hallSelect.appendChild(option);
+                });
+            } else {
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select sex first';
+                hallSelect.appendChild(defaultOption);
+            }
+        }
+
+        // Initialize hall options
+        updateHallOptions();
+
+        // Handle form submission
+        document.getElementById('authForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Here you would typically send the form data to your server
+            // For this example, we'll just simulate a successful submission
+
+            // Simulate processing time (1 second)
+            setTimeout(function() {
+                // Redirect to the home page
+                window.location.href = '/home.html'; // Replace with your actual home page URL
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

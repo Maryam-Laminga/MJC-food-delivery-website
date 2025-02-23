@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Confirmation</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            background-image: url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1856&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(144, 91, 66, 0.235); /* Semi-transparent dark brown */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmation-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4A2C2A; /* Dark brown color */
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button {
+            background-color: #6F4E37; /* Coffee brown */
+            color: white;
+        }
+
+        .logout-button:hover {
+            background-color: #8B6E4E; /* Lighter coffee brown */
+        }
+
+        .cancel-button {
+            background-color: #E6D1B1; /* Light beige */
+            color: #4A2C2A;
+        }
+
+        .cancel-button:hover {
+            background-color: #D7C0A1; /* Slightly darker beige */
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="overlay">
+            <div class="confirmation-box">
+                <h1>Are you sure you want to log out?</h1>
+                <div class="button-container">
+                    <button class="button logout-button" onclick="window.location.href='Index.html'">Yes, Log Out</button>
+                    <button class="button cancel-button" onclick="window.location.href='Home.html'">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+</html>
