@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJC Food Delivery - On Its Way</title>
+    <style>
+        /* Brown Theme Color Variables */
+        :root {
+            --primary-brown: #79634e;
+            --dark-brown: #6d5238;
+            --light-brown: #a58768;
+            --cream: #f8f3e9;
+            --text-dark: #3a2e21;
+            --text-light: #ffffff;
+            --accent: #d4b795;
+            --border: #c4aa8d;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-image: url("C:/Users/maryam/Documents/MJC-FOOD-DELIVERY UPDATED/COURIER/WHITE.jpg");
+            background-size: cover;  /* Ensures the image covers the screen */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents repetition */
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            
+}
+
+        
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-brown);
+            margin-bottom: 5px;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            color: var(--dark-brown);
+        }
+        
+        /* Delivery Card */
+        .delivery-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: var(--primary-brown);
+            color: var(--text-light);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .status-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .status-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .delivery-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-brown);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--accent);
+        }
+        
+        .courier-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .courier-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: var(--light-brown);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .courier-details {
+            flex: 1;
+        }
+        
+        .courier-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+        
+        .courier-contact {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .call-button {
+            display: inline-block;
+            background-color: var(--primary-brown);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .call-button:hover {
+            background-color: var(--dark-brown);
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            width: 120px;
+            color: #666;
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        .order-items {
+            margin-top: 15px;
+        }
+        
+        .order-item {
+            padding: 10px;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-weight: 500;
+        }
+        
+        .item-quantity {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .address-box {
+            background-color: var(--cream);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .estimated-time {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .time-highlight {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-brown);
+            display: block;
+            margin-top: 5px;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        /* Responsive */
+        @media (max-width: 550px) {
+            .delivery-card {
+                border-radius: 8px;
+            }
+            
+            .card-header {
+                padding: 15px;
+            }
+            
+            .status-title {
+                font-size: 20px;
+            }
+            
+            .card-content {
+                padding: 15px;
+            }
+            
+            .courier-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                margin-bottom: 15px;
+            }
+            
+            .info-label {
+                width: 100%;
+                margin-bottom: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+   
+    
+    <!-- Delivery Card -->
+    <div class="delivery-card">
+        <div class="card-header">
+            <div class="delivery-icon">🚚</div>
+            <h1 class="status-title">On Its Way</h1>
+            <p class="status-subtitle">Your order is on the way to you!</p>
+        </div>
+        
+        <div class="card-content">
+            <!-- Courier Information -->
+            <div class="section">
+                <h2 class="section-title">Delivery Personnel</h2>
+                <div class="courier-info">
+                    <div class="courier-avatar">OO</div>
+                    <div class="courier-details">
+                        <div class="courier-name">Owolabi Oreoluwa</div>
+                        <div class="courier-contact">090864672723</div>
+                        <a href="tel:090864672723" class="call-button">Call Courier</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Details -->
+            <div class="section">
+                <h2 class="section-title">Order Details</h2>
+                <div class="info-row">
+                    <div class="info-label">Order ID:</div>
+                    <div class="info-value">MJC-011</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Restaurant:</div>
+                    <div class="info-value">Big Meals</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Order Time:</div>
+                    <div class="info-value">Today, 12:45 PM</div>
+                </div>
+                
+                <div class="order-items">
+                    <div class="order-item">
+                        <span class="item-name">Jollof Rice with Chicken</span>
+                        <span class="item-quantity">× 2</span>
+                    </div>
+                    <div class="order-item">
+                        <span class="item-name">Moin Moin</span>
+                        <span class="item-quantity">× 2</span>
+                    </div>
+                    <div class="order-item">
+                        <span class="item-name">Chapman Drink</span>
+                        <span class="item-quantity">× 1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Delivery Address -->
+            <div class="section">
+                <h2 class="section-title">Delivery Address</h2>
+                <div class="address-box">
+                    Neal Wilson<br>
+                    <br>
+                 
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2023 MJC Food Delivery. All rights reserved.</p>
+    </div>
+</body>
+</html>

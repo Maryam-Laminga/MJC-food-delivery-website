@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Cancelled - Food Delivery</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url("C:/Users/maryam/Documents/MJC-FOOD-DELIVERY UPDATED/COURIER/WHITE.jpg");
+            background-size: cover;  /* Ensures the image covers the screen */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents repetition */
+            color: #3a3a3a;
+            line-height: 1.6;
+        }
+
+        /* Brown theme colors */
+        :root {
+            --primary: #8b5a2b;
+            --primary-light: #a67c52;
+            --primary-dark: #704626;
+            --secondary: #d7ccc8;
+            --accent: #5d4037;
+            --background: #f8f5f2;
+            --card-bg: #ffffff;
+            --text: #3a3a3a;
+            --text-light: #6c6c6c;
+            --border: #e0d6d0;
+            --warning-bg: #fff3e0;
+            --warning-text: #e65100;
+            --success-bg: #e8f5e9;
+            --success-text: #2e7d32;
+            --danger: #d32f2f;
+            --danger-dark: #b71c1c;
+            --danger-light: #ffebee;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0 30px;
+            font-size: 2rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: var(--danger);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            background-color: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-cancelled {
+            background-color: var(--danger-light);
+            color: var(--danger);
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Info sections */
+        .info-section {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .info-row-label {
+            width: 120px;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .info-row-value {
+            flex: 1;
+        }
+
+        /* Icon */
+        .icon-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--danger-light);
+            color: var(--danger);
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        /* Next steps */
+        .next-steps {
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .next-steps h3 {
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .next-steps ul {
+            margin-left: 20px;
+        }
+
+        .next-steps li {
+            margin-bottom: 8px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .info-row {
+                flex-direction: column;
+            }
+            
+            .info-row-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Cancelled</h1>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Order Status</h2>
+                <span class="status-badge status-cancelled">Cancelled by Customer</span>
+            </div>
+            <div class="card-content">
+                <div class="icon-container">
+                    <div class="icon-circle">✕</div>
+                    <h2>Order has been cancelled</h2>
+                    <p>The customer has decided not to proceed with this order after reviewing the updated prices.</p>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-row-label">Order ID:</div>
+                        <div class="info-row-value" id="order-id">ORD-123456</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Date:</div>
+                        <div class="info-row-value" id="order-date">March 6, 2025 - 7:25 PM</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Customer:</div>
+                        <div class="info-row-value" id="customer-name">Sarah Johnson</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Restaurant:</div>
+                        <div class="info-row-value" id="restaurant-name">Tasty Bites Restaurant</div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h3>Next Steps:</h3>
+                    <ul>
+                        <li>You do not need to place this order at the restaurant.</li>
+                        <li>You will be assigned to a new order shortly.</li>
+                        <li>No payment will be processed for this order.</li>
+                        <li>If you have already placed the order at the restaurant, please contact support immediately.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-block">Return to Dashboard</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; color: var(--text-light);">
+            <p>If you have any questions, please contact dispatch at (555) 123-4567</p>
+        </div>
+    </div>
+</body>
+</html>

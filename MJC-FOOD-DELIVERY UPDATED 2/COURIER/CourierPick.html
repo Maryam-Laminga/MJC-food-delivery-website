@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Order- Food Delivery</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url("C:/Users/maryam/Documents/MJC-FOOD-DELIVERY UPDATED/COURIER/WHITE.jpg");
+            color: #3a3a3a;
+            line-height: 1.6;
+            filter: brightness(12px);
+            backdrop-filter: brightness(150%);
+        }
+
+        /* Brown theme colors */
+        :root {
+            --primary: #ffffff;
+            --primary-light: #967250;
+            --primary-dark: #383838;
+            --secondary: #d7ccc8;
+            --accent: #ffffff;
+            --background: #f8f5f2;
+            --card-bg: #ffffff;
+            --text: #000000;
+            --text-light: #6c6c6c;
+            --border: #e0d6d0;
+            --warning-bg: #fff3e0;
+            --warning-text: #e65100;
+            --success-bg: #e8f5e9;
+            --success-text: #2e7d32;
+            --pending-bg: #fffde7;
+            --pending-text: #f57f17;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0 30px;
+            font-size: 2rem;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            background-color: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: var(--pending-bg);
+            color: var(--pending-text);
+        }
+
+        .status-success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        /* Info sections */
+        .info-section {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .info-row-label {
+            width: 120px;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .info-row-value {
+            flex: 1;
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-success {
+            background-color: var(--success-text);
+        }
+
+        .btn-success:hover {
+            background-color: #1b5e20;
+        }
+
+        /* Order items */
+        .order-item {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .order-item-header {
+            font-weight: 600;
+            background-color: #f5f5f5;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Form elements */
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(139, 90, 43, 0.2);
+        }
+
+        /* Price comparison */
+        .price-difference {
+            font-size: 0.875rem;
+            padding: 3px 6px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .price-difference.higher {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .price-difference.lower {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .price-difference.same {
+            background-color: #f5f5f5;
+            color: #616161;
+        }
+
+        /* Summary section */
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Alert/notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(150%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive grid */
+        @media (max-width: 768px) {
+            .order-item {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .order-item > div {
+                padding: 5px 0;
+            }
+
+            .order-item-header {
+                display: none;
+            }
+
+            .order-item > div::before {
+                content: attr(data-label);
+                font-weight: 600;
+                display: block;
+                font-size: 0.75rem;
+                color: var(--text-light);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+      
+
+        <!-- Rider Status Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Delivery Status</h2>
+                <span class="status-badge status-pending" id="order-status">In Progress</span>
+            </div>
+            <div class="card-content">
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-row-label">Rider:</div>
+                        <div class="info-row-value">Owolabi Oreoluwa</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Order ID:</div>
+                        <div class="info-row-value" id="order-id">ORD-123</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Date:</div>
+                        <div class="info-row-value" id="order-date">March 6, 2025 - 7:10 PM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Details Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Delivery Details</h2>
+            </div>
+            <div class="card-content">
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-row-label">Customer:</div>
+                        <div class="info-row-value" id="customer-name">Awarun Gbenga</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Phone:</div>
+                        <div class="info-row-value" id="customer-phone">0809644322</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-row-label">Restaurant:</div>
+                        <div class="info-row-value" id="restaurant-name">Flakky's</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-row-label">Address:</div>
+                        <div class="info-row-value" id="restaurant-address">Busa</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-row">
+                        <div class="info-row-label">Delivery To:</div>
+                        <div class="info-row-value" id="delivery-address">Neal Wilson</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Price Update Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Confirm & Update Prices</h2>
+            </div>
+            <div class="card-content">
+                <p style="margin-bottom: 15px;">Please update the actual prices based on the restaurant's menu:</p>
+                
+                <!-- Order Items Table -->
+                <div class="order-items-table">
+                    <!-- Table Header -->
+                    <div class="order-item order-item-header">
+                        <div>Item</div>
+                        <div>Estimated Price</div>
+                        <div>Actual Price</div>
+                        <div>Difference</div>
+                    </div>
+                    
+                    <!-- Order Items (will be filled dynamically) -->
+                    <div id="order-items-container">
+                        <!-- Sample item (will be replaced by JavaScript) -->
+                        <div class="order-item">
+                            <div data-label="Item">Loading...</div>
+                            <div data-label="Estimated Price">₦0.00</div>
+                            <div data-label="Actual Price">₦0.00</div>
+                            <div data-label="Difference">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Summary -->
+                <div style="margin-top: 20px;">
+                    <div class="summary-row">
+                        <span>Subtotal (Estimated)</span>
+                        <span id="estimated-subtotal">₦0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal (Actual)</span>
+                        <span id="actual-subtotal">₦0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee</span>
+                        <span id="delivery-fee">₦300.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Service Fee (15%)</span>
+                        <span id="service-fee">₦0.00</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total Amount</span>
+                        <span id="total-amount">₦300.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div>
+                    <span id="price-difference-summary">Price difference: 0%</span>
+                </div>
+                <button id="confirm-prices-btn" class="btn btn-success" onclick="window.location.href='PriceConfirmationForCustomer.html';">Confirm & Send to Customer</button>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification element -->
+    <div id="notification" class="notification">
+        Price update sent to customer successfully!
+    </div>
+
+    <script>
+        // Sample order data (in a real app, this would come from your backend)
+        const orderData = {
+            id: "ORD-123456",
+            date: "March 6, 2025 - 7:10 PM",
+            customer: {
+                name: "Awarun Gbenga",
+                phone: "07079407863"
+            },
+            restaurant: {
+                name: "Big Meals",
+                address: "Busa",
+               
+            },
+            deliveryAddress: "Neal Wilson",
+            items: [
+                { id: 1, name: "Jollof Rice", quantity: 2, estimatedPrice: 1500 },
+                { id: 2, name: "Chicken Suya", quantity: 1, estimatedPrice: 2000 },
+                { id: 3, name: "Moin Moin", quantity: 2, estimatedPrice: 700 },
+                { id: 4, name: "Chapman Drink", quantity: 1, estimatedPrice: 1000 }
+            ],
+            fees: {
+                deliveryFee: 300,
+                serviceFeePercentage: 0.15
+            }
+        };
+
+        // Store the actual prices entered by the rider
+        let actualPrices = {};
+
+        // DOM elements
+        const orderItemsContainer = document.getElementById('order-items-container');
+        const estimatedSubtotalEl = document.getElementById('estimated-subtotal');
+        const actualSubtotalEl = document.getElementById('actual-subtotal');
+        const deliveryFeeEl = document.getElementById('delivery-fee');
+        const serviceFeeEl = document.getElementById('service-fee');
+        const totalAmountEl = document.getElementById('total-amount');
+        const priceDifferenceSummaryEl = document.getElementById('price-difference-summary');
+        const confirmPricesBtn = document.getElementById('confirm-prices-btn');
+        const notification = document.getElementById('notification');
+        const orderStatusEl = document.getElementById('order-status');
+        const orderIdEl = document.getElementById('order-id');
+        const orderDateEl = document.getElementById('order-date');
+        const customerNameEl = document.getElementById('customer-name');
+        const customerPhoneEl = document.getElementById('customer-phone');
+        const restaurantNameEl = document.getElementById('restaurant-name');
+        const restaurantAddressEl = document.getElementById('restaurant-address');
+        const deliveryAddressEl = document.getElementById('delivery-address');
+
+        // Initialize the page
+        function initPage() {
+            // Set initial values in the UI
+            orderIdEl.textContent = orderData.id;
+            orderDateEl.textContent = orderData.date;
+            customerNameEl.textContent = orderData.customer.name;
+            customerPhoneEl.textContent = orderData.customer.phone;
+            restaurantNameEl.textContent = orderData.restaurant.name;
+            restaurantAddressEl.textContent = orderData.restaurant.address;
+            deliveryAddressEl.textContent = orderData.deliveryAddress;
+            deliveryFeeEl.textContent = `₦${orderData.fees.deliveryFee.toFixed(2)}`;
+
+            // Initialize actual prices to match estimated prices
+            orderData.items.forEach(item => {
+                actualPrices[item.id] = item.estimatedPrice;
+            });
+
+            // Render order items
+            renderOrderItems();
+            // Calculate initial totals
+            calculateTotals();
+        }
+
+        // Render order items in the table
+        function renderOrderItems() {
+            orderItemsContainer.innerHTML = "";
+
+            orderData.items.forEach(item => {
+                const rowElement = document.createElement('div');
+                rowElement.className = 'order-item';
+
+                // Calculate difference percentage
+                const estimatedTotal = item.estimatedPrice * item.quantity;
+                const actualPrice = actualPrices[item.id] || item.estimatedPrice;
+                const actualTotal = actualPrice * item.quantity;
+                
+                const difference = actualTotal - estimatedTotal;
+                const differencePercent = estimatedTotal > 0 
+                    ? ((difference / estimatedTotal) * 100).toFixed(1)
+                    : "0.0";
+                
+                // Determine difference class
+                let differenceClass = 'same';
+                if (difference > 0) differenceClass = 'higher';
+                else if (difference < 0) differenceClass = 'lower';
+
+                rowElement.innerHTML = `
+                    <div data-label="Item">${item.quantity} × ${item.name}</div>
+                    <div data-label="Estimated Price">₦${item.estimatedPrice.toFixed(2)}</div>
+                    <div data-label="Actual Price">
+                        <input type="number" 
+                            class="actual-price-input" 
+                            data-item-id="${item.id}" 
+                            min="0" 
+                            step="0.01" 
+                            value="${actualPrice.toFixed(2)}">
+                    </div>
+                    <div data-label="Difference">
+                        <span class="price-difference ${differenceClass}">
+                            ${differencePercent > 0 ? '+' : ''}${differencePercent}%
+                        </span>
+                    </div>
+                `;
+
+                orderItemsContainer.appendChild(rowElement);
+            });
+
+            // Add event listeners to the price inputs
+            document.querySelectorAll('.actual-price-input').forEach(input => {
+                input.addEventListener('input', handlePriceChange);
+            });
+        }
+
+        // Handle price input changes
+        function handlePriceChange(e) {
+            const itemId = parseInt(e.target.getAttribute('data-item-id'));
+            const newPrice = parseFloat(e.target.value) || 0;
+            
+            // Update actual price
+            actualPrices[itemId] = newPrice;
+            
+            // Recalculate and update UI
+            calculateTotals();
+            updatePriceDifferences();
+        }
+
+        // Update the price difference indicators
+        function updatePriceDifferences() {
+            orderData.items.forEach(item => {
+                const input = document.querySelector(`.actual-price-input[data-item-id="${item.id}"]`);
+                if (!input) return;
+                
+                const row = input.closest('.order-item');
+                const differenceEl = row.querySelector('.price-difference');
+                
+                const estimatedTotal = item.estimatedPrice * item.quantity;
+                const actualPrice = actualPrices[item.id] || item.estimatedPrice;
+                const actualTotal = actualPrice * item.quantity;
+                
+                const difference = actualTotal - estimatedTotal;
+                const differencePercent = estimatedTotal > 0 
+                    ? ((difference / estimatedTotal) * 100).toFixed(1)
+                    : "0.0";
+                
+                // Update class and text
+                differenceEl.className = 'price-difference';
+                if (difference > 0) differenceEl.classList.add('higher');
+                else if (difference < 0) differenceEl.classList.add('lower');
+                else differenceEl.classList.add('same');
+                
+                differenceEl.textContent = `${differencePercent > 0 ? '+' : ''}${differencePercent}%`;
+            });
+        }
+
+        // Calculate order totals
+        function calculateTotals() {
+            // Calculate estimated subtotal
+            const estimatedSubtotal = orderData.items.reduce((sum, item) => {
+                return sum + (item.estimatedPrice * item.quantity);
+            }, 0);
+
+            // Calculate actual subtotal
+            const actualSubtotal = orderData.items.reduce((sum, item) => {
+                const actualPrice = actualPrices[item.id] || item.estimatedPrice;
+                return sum + (actualPrice * item.quantity);
+            }, 0);
+
+            // Calculate service fee based on actual prices
+            const serviceFee = actualSubtotal * orderData.fees.serviceFeePercentage;
+            
+            // Calculate total
+            const total = actualSubtotal + orderData.fees.deliveryFee + serviceFee;
+
+            // Calculate overall price difference percentage
+            const totalDifference = actualSubtotal - estimatedSubtotal;
+            const differencePercent = estimatedSubtotal > 0 
+                ? ((totalDifference / estimatedSubtotal) * 100).toFixed(1)
+                : "0.0";
+
+            // Update UI
+            estimatedSubtotalEl.textContent = `₦${estimatedSubtotal.toFixed(2)}`;
+            actualSubtotalEl.textContent = `₦${actualSubtotal.toFixed(2)}`;
+            serviceFeeEl.textContent = `₦${serviceFee.toFixed(2)}`;
+            totalAmountEl.textContent = `₦${total.toFixed(2)}`;
+
+            // Update price difference summary
+            const differenceText = `${differencePercent > 0 ? '+' : ''}${differencePercent}%`;
+            priceDifferenceSummaryEl.textContent = `Price difference: ${differenceText}`;
+        }
+
+        // Confirm prices and send to customer
+        confirmPricesBtn.addEventListener('click', () => {
+            // In a real app, you would send the updated prices to your backend
+            // For this demo, we'll just show a notification
+
+            // Show the notification
+            notification.classList.add('show');
+            
+            // Update order status
+            orderStatusEl.textContent = 'Prices Updated';
+            orderStatusEl.className = 'status-badge status-success';
+            
+            // Disable the confirm button
+            confirmPricesBtn.disabled = true;
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        });
+
+        // Initialize the page when it loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
