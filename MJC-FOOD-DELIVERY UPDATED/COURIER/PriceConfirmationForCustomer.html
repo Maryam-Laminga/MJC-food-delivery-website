@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Confirmation - Food Delivery</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f5f2;
+            color: #3a3a3a;
+            line-height: 1.6;
+        }
+
+        /* Brown theme colors */
+        :root {
+            --primary: #8b5a2b;
+            --primary-light: #a67c52;
+            --primary-dark: #704626;
+            --secondary: #d7ccc8;
+            --accent: #5d4037;
+            --background: #f8f5f2;
+            --card-bg: #ffffff;
+            --text: #3a3a3a;
+            --text-light: #6c6c6c;
+            --border: #e0d6d0;
+            --warning-bg: #fff3e0;
+            --warning-text: #e65100;
+            --success-bg: #e8f5e9;
+            --success-text: #2e7d32;
+            --danger: #d32f2f;
+            --danger-dark: #b71c1c;
+            --info-bg: #e3f2fd;
+            --info-text: #0d47a1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0 30px;
+            font-size: 2rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: var(--primary-light);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border);
+            background-color: #fafafa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: var(--info-bg);
+            color: var(--info-text);
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-success {
+            background-color: var(--success-text);
+        }
+
+        .btn-success:hover {
+            background-color: #1b5e20;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Order items */
+        .order-item {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .order-item-header {
+            font-weight: 600;
+            background-color: #f5f5f5;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Price comparison */
+        .price-difference {
+            font-size: 0.875rem;
+            padding: 3px 6px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .price-difference.higher {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .price-difference.lower {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .price-difference.same {
+            background-color: #f5f5f5;
+            color: #616161;
+        }
+
+        /* Summary section */
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Alert styles */
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background-color: var(--info-bg);
+            color: var(--info-text);
+            border: 1px solid #bbdefb;
+        }
+
+        /* Timer */
+        .timer {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .timer-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--danger);
+        }
+
+        /* Button group */
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* Responsive grid */
+        @media (max-width: 768px) {
+            .order-item {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .order-item > div {
+                padding: 5px 0;
+            }
+
+            .order-item-header {
+                display: none;
+            }
+
+            .order-item > div::before {
+                content: attr(data-label);
+                font-weight: 600;
+                display: block;
+                font-size: 0.75rem;
+                color: var(--text-light);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Price Update Confirmation</h1>
+
+        <div class="alert alert-info">
+            <p>Your delivery rider has confirmed the actual prices at the restaurant. Please review the updated prices below and confirm if you'd like to proceed with your order.</p>
+        </div>
+
+        <!-- Order Details Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Order Details</h2>
+                <span class="status-badge status-pending">Awaiting Your Confirmation</span>
+            </div>
+            <div class="card-content">
+                <div style="margin-bottom: 20px;">
+                    <p><strong>Restaurant:</strong> <span id="restaurant-name">Flakky's</span></p>
+                    <p><strong>Order ID:</strong> <span id="order-id">ORD-123</span></p>
+                    <p><strong>Delivery Address:</strong> <span id="delivery-address">Neal Wilson</span></p>
+                </div>
+                
+                <!-- Order Items Table -->
+                <div class="order-items-table">
+                    <!-- Table Header -->
+                    <div class="order-item order-item-header">
+                        <div>Item</div>
+                        <div>Estimated Price</div>
+                        <div>Actual Price</div>
+                        <div>Difference</div>
+                    </div>
+                    
+                    <!-- Order Items -->
+                    <div id="order-items-container">
+                        <div class="order-item">
+                            <div data-label="Item">2 × Jollof Rice</div>
+                            <div data-label="Estimated Price">₦1,500.00</div>
+                            <div data-label="Actual Price">₦1,600.00</div>
+                            <div data-label="Difference">
+                                <span class="price-difference higher">+6.7%</span>
+                            </div>
+                        </div>
+                        <div class="order-item">
+                            <div data-label="Item">1 × Chicken Suya</div>
+                            <div data-label="Estimated Price">₦2,000.00</div>
+                            <div data-label="Actual Price">₦2,000.00</div>
+                            <div data-label="Difference">
+                                <span class="price-difference same">0.0%</span>
+                            </div>
+                        </div>
+                        <div class="order-item">
+                            <div data-label="Item">2 × Moin Moin</div>
+                            <div data-label="Estimated Price">₦700.00</div>
+                            <div data-label="Actual Price">₦650.00</div>
+                            <div data-label="Difference">
+                                <span class="price-difference lower">-7.1%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Summary -->
+                <div style="margin-top: 20px;">
+                    <div class="summary-row">
+                        <span>Subtotal (Estimated)</span>
+                        <span id="estimated-subtotal">₦4,900.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal (Actual)</span>
+                        <span id="actual-subtotal">₦4,950.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee</span>
+                        <span id="delivery-fee">₦300.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Service Fee (15%)</span>
+                        <span id="service-fee">₦742.50</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total Amount</span>
+                        <span id="total-amount">₦5,992.50</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; text-align: center;">
+                    <span class="price-difference higher">Overall price difference: +1.0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timer -->
+        <div class="timer">
+            Please confirm within: <span class="timer-value" id="countdown">05:00</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+            <button id="reject-btn" class="btn btn-outline">Cancel Order</button>
+            
+            <button class="btn btn-success" onclick="window.location.href='OnItsWay.html';">Confirm & Proceed</button>
+        </div>
+
+        <!-- Additional Information -->
+        <div style="margin-top: 30px; font-size: 0.9rem; color: var(--text-light);">
+            <p>If you don't confirm within 5 minutes, the order will be automatically cancelled to avoid delays for the restaurant and delivery rider.</p>
+            <p>If you have any questions, please contact our customer support at support@fooddelivery.com</p>
+        </div>
+    </div>
+
+    <script>
+        // Countdown timer functionality
+        function startCountdown() {
+            let minutes = 5;
+            let seconds = 0;
+            const countdownEl = document.getElementById('countdown');
+            
+            const interval = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(interval);
+                        handleTimeout();
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                
+                // Update the display
+                countdownEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+            
+            // Store the interval ID so we can clear it if the user confirms or cancels
+            window.countdownInterval = interval;
+        }
+        
+        // Handle timeout (when countdown reaches zero)
+        function handleTimeout() {
+            alert('Time expired. Your order has been automatically cancelled.');
+            // In a real app, you would redirect to a cancellation page or show a modal
+        }
+        
+        // Handle confirm button click
+        document.getElementById('confirm-btn').addEventListener('click', () => {
+            clearInterval(window.countdownInterval);
+            alert('Order confirmed! Your food is being prepared and will be delivered soon.');
+            // In a real app, you would send confirmation to the server and redirect to a confirmation page
+        });
+        
+        // Handle reject button click
+        document.getElementById('reject-btn').addEventListener('click', () => {
+            clearInterval(window.countdownInterval);
+            alert('Order cancelled. You will not be charged.');
+            // In a real app, you would send cancellation to the server and redirect to the home page
+        });
+        
+        // Start the countdown when the page loads
+        document.addEventListener('DOMContentLoaded', startCountdown);
+    </script>
+</body>
+</html>

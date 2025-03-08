@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJC Food Delivery - On the Way</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f5f1;
+            color: #3c2a21;
+            line-height: 1.5;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Header styles */
+        .header {
+            background-color: #7d5a50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .help-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: #7d5a50;
+            border: none;
+            border-radius: 9999px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .eta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        .eta-icon {
+            margin-right: 8px;
+        }
+        
+        .status-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+        
+        /* Card styles */
+        .card {
+            border-bottom: 1px solid #e6d5b8;
+            padding: 20px;
+        }
+        
+        .card:last-child {
+            border-bottom: none;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #3c2a21;
+        }
+        
+        /* Status styles */
+        .status-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .status-icon {
+            background-color: #e6d5b8;
+            color: #7d5a50;
+            width: 36px;
+            height: 36px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .status-text h3 {
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: #3c2a21;
+        }
+        
+        .status-text p {
+            color: #6b7280;
+        }
+        
+        /* Delivery person */
+        .delivery-person {
+            display: flex;
+            align-items: center;
+        }
+        
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 9999px;
+            background-color: #e6d5b8;
+            overflow: hidden;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+        }
+        
+        .stars {
+            display: flex;
+            color: #b85c38;
+        }
+        
+        .rating-score {
+            color: #6b7280;
+            font-size: 14px;
+            margin-left: 4px;
+        }
+        
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            color: #7d5a50;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+        
+        .contact-icon {
+            margin-right: 4px;
+        }
+        
+        /* Order details */
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .order-number {
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .order-list {
+            list-style: none;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        /* Map placeholder */
+        .map-placeholder {
+            height: 150px;
+            background-color: #e6d5b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7d5a50;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        /* Support buttons */
+        .support-buttons {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .support-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .primary-btn {
+            background-color: #7d5a50;
+            color: white;
+            border: none;
+        }
+        
+        .secondary-btn {
+            background-color: white;
+            color: #7d5a50;
+            border: 1px solid #7d5a50;
+        }
+        
+        .btn-icon {
+            margin-right: 8px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #e6d5b8;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            color: #3c2a21;
+            font-size: 12px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+        
+        .footer-link {
+            color: #7d5a50;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .footer-link:hover {
+            color: #b85c38;
+        }
+        
+        /* Icons */
+        .icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">MJC Delivery</div>
+            
+                <span>Your food is on the way!</span>
+            </div>
+            <div class="status-info">
+                Estimated arrival in 25 minutes • On the way to your location
+            </div>
+            <button class="help-btn">Help</button>
+        </div>
+        
+        <!-- Delivery Person Card -->
+        <div class="card">
+            <div class="card-title">Your Delivery Person</div>
+            <div class="delivery-person">
+                <div class="avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Delivery person">
+                </div>
+                <div>
+                    <h3>Owolabi Oreoluwa</h3>
+                    <div class="rating">
+                        
+        
+                    </div>
+                    <button class="contact-btn">
+                        <svg class="icon contact-icon" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        Contact: 07079407863
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Order Details Card -->
+        <div class="card">
+            <div class="order-header">
+                <div class="card-title" style="margin-bottom: 0;">Order Details</div>
+                <span class="order-number">Order #MJC 123</span>
+            </div>
+            
+            <div class="status-item">
+                <div class="status-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    </svg>
+                </div>
+                <div class="status-text">
+                    <h3>Your Order</h3>
+                    <ul class="order-list">
+                        <li>2 × Jollof Rice</li>
+                        <li>1 × Chicken Suya</li>
+                        <li>2 × Moin Moin</li>
+                        <li>1 × Chapman Drink</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="status-item" style="margin-bottom: 0;">
+                <div class="status-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="status-text">
+                    <h3>Delivery Address</h3>
+                    <p>Neal Wilson</p>
+                </div>
+            </div>
+            
+            
+        
+        <!-- Support Section -->
+        <div class="card">
+            <div class="card-title">Need Help?</div>
+            <div class="support-buttons">
+                <button class="support-btn primary-btn">
+                    <svg class="icon btn-icon" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Chat Support
+                </button>
+                <button class="support-btn secondary-btn">
+                    <svg class="icon btn-icon" viewBox="0 0 24 24">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    Call Us
+                </button>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <p>© 2025 MJC Food Delivery. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Terms</a>
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Help</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

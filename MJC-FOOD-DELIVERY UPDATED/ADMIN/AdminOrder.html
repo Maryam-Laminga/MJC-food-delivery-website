@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJC Admin - Orders</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f3e9;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #5d4037;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            margin: 20px;
+            color: #5d4037;
+        }
+
+        .orders-container {
+            padding: 20px;
+        }
+
+        .order-filters {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 8px;
+            border: 1px solid #bcaaa4;
+            border-radius: 4px;
+        }
+
+        .orders-table {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #8d6e63;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #fafafa;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        .status-pending {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .status-delivered {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-in-transit {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #8d6e63;
+            color: white;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background-color: #6d4c41;
+        }
+
+        .pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #8d6e63;
+            background-color: white;
+            color: #8d6e63;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination button.active {
+            background-color: #8d6e63;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .filter-group {
+                flex-direction: column;
+            }
+            
+            .orders-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>MJC Food Delivery Admin</h1>
+        <button class="action-btn">Logout</button>
+    </header>
+
+    <h2 class="page-title">Orders Management</h2>
+
+    <div class="orders-container">
+        <div class="order-filters">
+            <div class="filter-group">
+                <select>
+                    <option value="">Filter by Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in-transit">In Transit</option>
+                    <option value="delivered">Delivered</option>
+                </select>
+                <input type="date" placeholder="Filter by Date">
+                <input type="text" placeholder="Search Order ID">
+            </div>
+        </div>
+
+        <div class="orders-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Location</th>
+                        <th>Order Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#12345</td>
+                        <td>John Smith</td>
+                        <td>Dorm A, Room 203</td>
+                        <td>2024-03-02 10:30 AM</td>
+                        <td><span class="status status-pending">Pending</span></td>
+                        <td>
+                            <button class="action-btn">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#12346</td>
+                        <td>Sarah Johnson</td>
+                        <td>Library, Study Room 4</td>
+                        <td>2024-03-02 10:15 AM</td>
+                        <td><span class="status status-in-transit">In Transit</span></td>
+                        <td>
+                            <button class="action-btn">View</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#12347</td>
+                        <td>Michael Brown</td>
+                        <td>Science Building, Room 101</td>
+                        <td>2024-03-02 09:45 AM</td>
+                        <td><span class="status status-delivered">Delivered</span></td>
+                        <td>
+                            <button class="action-btn">View</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button>Previous</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next</button>
+        </div>
+    </div>
+</body>
+</html>
