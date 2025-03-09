@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJC Food Delivery - Checkout</title>
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1856&q=80');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background:#967250;
+            padding: 50px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 400px;
+        }
+        input, textarea, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        .save-button {
+      background-color: #7B5D3F;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    
+    .save-button:hover {
+      background-color: #5D4037;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>MJC Food Delivery - Checkout</h2>
+        <p>Transfer your payment to:</p>
+        <p><strong>Bank Name:</strong> XYZ Bank</p>
+        <p><strong>Account Name:</strong> MJC Food Services</p>
+        <p><strong>Account Number:</strong> 1234567890</p>
+        
+        <form id="payment-form">
+            <label>Your Name:</label>
+            <input type="text" id="name" required>
+
+            <label>Phone Number:</label>
+            <input type="text" id="phone" required>
+
+            <label>Transaction Reference:</label>
+            <input type="text" id="transactionId" required>
+
+            <label>Upload Payment Screenshot:</label>
+            <input type="file" id="receipt" required>
+
+            <label>Remarks:</label>
+            <textarea id="remarks" rows="3"></textarea>
+
+            
+            <button class="save-button" onclick="window.location.href='Home.html'">Submit Payment</button>
+        </form>
+
+        <p id="message"></p>
+    </div>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+        .back-button svg {
+            width: 24px;
+            height: 24px;
+            fill: #333;
+        }
+    </style>
+    
+    <body>
+        <button class="back-button" onclick="window.location.href='Home.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+        </button>
+       
+    </body>
+
+</body>
+</html>
